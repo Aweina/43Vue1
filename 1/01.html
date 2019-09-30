@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="demo">
+    <a href="#" @click="doLogin()" style="margin-right:20px" v-show="!bLogin">登录</a>
+    <a href="#" @click="doRegister()"  v-show="bLogin">注册</a>
+    <form action="#" v-id="bLogin">
+        <p>账号：<input type="text"></p>
+        <p>密码：<input type="text"></p>
+        <button>登录</button>
+    </form>
+
+    <form action="#" v-else>
+        <p>请输入账号：<input type="text"></p>
+        <p>请输入密码：<input type="text"></p>
+        <p>再次输入：<input type="text"></p>
+        <button>注册</button>
+    </form>
+</div>
+
+
+<script>
+    new Vue({
+        el:'#demo',
+        data(){
+            return{
+                bLogin:true
+            }
+        },
+        methods:{
+            doLogin(){
+                this.bLogin=true;
+            },
+            doRegister(){
+                this.bLogin=false;
+            }
+        }
+    })
+</script>
+</body>
+</html>

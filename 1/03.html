@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css">
+        .bgset{color: red;}
+    </style>
+</head>
+<body>
+<div id="demo">
+    <ul>
+        <li v-for="(item,index) in list" :class=['red',{'bgset':current==index}] @click='doClick(index)'>
+            {{item}}
+        </li>
+    </ul>
+</div>
+
+<script>
+    new Vue({
+        el:'#demo',
+        data(){
+            return{
+                list:['a','b','c'],
+                current:0
+            }
+        },
+        methods:{
+            doClick(index){
+                this.current=index
+            }
+        }
+    })
+</script>
+</body>
+</html>

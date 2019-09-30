@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li v-for="(item,index) in flowers" :key="index">
+            <p>产品名称:{{item.name}}</p>
+            <p>产品价格:{{item.price}}</p>
+        </li>
+    </ul>
+</div>
+
+
+<script>
+    new Vue({
+        el:'#app',
+        data() {
+            return {
+                flowers:[{name:'康乃馨',price:20},{name:'红玫瑰',price:40},
+                    {name:'百合',price:50},{name:'满天星',price:10}]
+            }
+
+        }
+    })
+</script>
+</body>
+</html>

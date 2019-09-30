@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css">
+        *{ margin: 0px; padding: 0px;}
+        a{ text-decoration: none;}
+   #test{ width: 1000px; margin: 0 auto}
+   table{ text-align: center}
+table th{ height: 40px; background: aliceblue; color: cornflowerblue}
+        button{ width: 30px; height: 40px}
+    </style>
+</head>
+<body>
+
+<div id="test">
+    <table id="mytable" border="1px" cellspacing="0" width="800px">
+        <tr>
+            <th><input type="checkBox"  @click="selectProduct(isSelectAll)" v-bind:checked="isSelectAll" />全选</th>
+            <th>商品序号</th>
+            <th>商品编号</th>
+            <th>商品名称</th>
+            <th>商品数量</th>
+            <th>商品单价</th>
+            <th>移除</th>
+        </tr>
+        <tr v-for="(item,index) in productList">
+            <td><input type="checkBox"   v-bind:checked="item.isSelect" @click="item.isSelect=!item.isSelect"/>选择</td>
+            <td>{{index+1}}</td>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>
+                <span><button href="#" @click="item.count>0?item.count--:''">-</button></span>
+                <strong>{{item.count}}</strong>
+                <span><button href="#" @click="item.count++">+</button></span>
+            </td>
+            <td>{{item.price}}</td>
+            <td><a href="#" @click="deletePro(index)">删除</a></td>
+        </tr>
+        <tr>
+            <td colspan="7" style="text-align: left">  <div class="checkPro">
+                <div class="rightConent">
+                    <span>总价为：<span style="color: brown; font-weight: bold">{{getTotal.totalPrice}}</span>元</span>
+                </div>
+
+            </div></td>
+        </tr>
+    </table>
+
+
+
+    <script>
+        new Vue({
+            el : "#test",
+            data : {
+                productList:[{id:'0001',name:'iphoneX',count:1,price:6188},
+                {id:'0002',name:'华为p30',count:2,price:5934},
+                {id:'0003',name:'小米RedmiBook',count:1,price:4299},
+                {id:'0004',name:'华为畅享9e',count:3,price:799}],
+            },
+            methods:{
+                selectProduct:function(_isSelect){
+                    //遍历productList，全部取反
+                    for (var i = 0, len = this.productList.length; i < len; i++) {
+                        this.productList[i].isSelect = !_isSelect;
+                    }
+                },
+                deletePro : function(index){
+                    alert("你正在删除"+this.productList[index].name);
+                    this.productList.splice(index,1);
+                },
+                //删除已经选中(isSelect=true)的产品
+                deleteProduct:function () {
+
+                       this.productList=this.productList.filter(function (item) {
+                           return !item.isSelect
+                       })
+
+
+                },
+            },
+            computed:{
+                //检测是否全选
+                isSelectAll:function(){
+                    //如果productList中每一条数据的isSelect都为true，返回true，否则返回false;
+                    return this.productList.every(function (val) { return val.isSelect});
+                },
+                getTotal:function(){
+                    var prolist = this.productList.filter(function (val) { return val.isSelect}),
+                        totalPri = 0;
+                    for (var i = 0,len = prolist.length; i < len; i++) {
+                        totalPri+=prolist[i].price*prolist[i].count;
+                    }
+                    return {totalNum:prolist.length,totalPrice:totalPri}
+                },
+            },
+            mounted:function () {
+                var _this=this;
+                //为productList添加select（是否选中）字段，初始值为true
+                this.productList.map(function (item) {
+                    _this.$set(item, 'isSelect', true);
+                })
+            }
+
+        })
+
+    </script>
+</body>
+</html>

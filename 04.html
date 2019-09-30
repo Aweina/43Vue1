@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css">
+        *{ margin: 0px; padding: 0px;}
+        .bgset{border: brown 2px solid}
+        #demo{ width: 1000px; height: 500px; margin: 0 auto; }
+        #demo>ul{ margin-left: 360px}
+        #demo>ul>li{ width: 400px; background: #f7f7f7; margin-top: 20px}
+        ul>li>img{ vertical-align: middle}
+    </style>
+</head>
+<body>
+<div id="demo">
+    <img  :src="bigImg" v-for="(item,index) in list"  style="position:absolute">
+    <ul style="list-style: none">
+
+        <p>颜色选择</p>
+        <li v-for="(item,index) in list" :class=['brown',{'bgset':current==index}] @click='doClick(item,index)'>
+            <img :src="item.imgUrl" alt="">
+            <span style=" ">{{item.desc}}</span>
+
+        </li>
+    </ul>
+</div>
+
+
+<script>
+    new Vue({
+        el:'#demo',
+        data() {
+            return {
+                list:[{desc:'蓝色【三档强劲风力-升级静音版】带底座',
+                    imgUrl:'img/xls.jpg',
+                    imgBigUrl:'img/d/dls.jpg'},
+                    {desc:'粉色【三档强劲风力-升级静音版】带底座',
+                        imgUrl:'img/xfs.jpg',
+                        imgBigUrl:'img/d/dfs.jpg'},
+                    {desc:'白色【三档强劲风力-升级静音版】带底座',
+                        imgUrl:'img/xbs.jpg',
+                        imgBigUrl:'img/d/dbs.jpg'},
+                    {desc:'灰色【三档强劲风力-升级静音版】带底座',
+                        imgUrl:'img/xhs.jpg',
+                        imgBigUrl:'img/d/dhs.jpg'}],
+                current:0,
+                bigImg:'img/d/dls.jpg'
+
+            }
+        },
+        methods:{
+            doClick(item,index){
+                this.current=index
+                this.bigImg=item.imgBigUrl;
+            }
+        }
+    })
+</script>
+</body>
+</html>
